@@ -1,14 +1,14 @@
-import { Client } from "discord.js";
+import { Client } from 'discord.js';
+import { Event } from './types';
 
-export const readyEvent = {
-	name: 'ready',
+export const ready: Event = {
 	once: true,
 	execute(client: Client) {
-		const botUser = client.user;
+		const user = client.user;
 
-		botUser.setUsername('EMS Helper');
-		botUser.setPresence({ status: 'dnd' });
+		user.setUsername('EMS Helper');
+		user.setPresence({ status: 'dnd' });
 
-		console.log(`Ready! Logged in as ${botUser}`);
+		console.log(`Ready! Logged in as ${user.tag}`);
 	},
 };
