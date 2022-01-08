@@ -1,14 +1,21 @@
-import { Client, MessageComponentInteraction } from 'discord.js';
+import { Client, CommandInteraction } from 'discord.js';
 
 import * as commands from '../commands';
 import { Command } from '../commands/types';
 
 import { Event } from './types';
 
-async function executeCommandInteraction(client: Client, interaction: MessageComponentInteraction) {
+async function executeCommandInteraction(client: Client, interaction: CommandInteraction) {
 	try {
 		Object.keys(commands).forEach(async name => {
 			const command = ((commands as unknown) as { [key: string]: Command })[name];
+
+			if (command.channelId !== undefined && command.channelId() !== interaction.channelId) {
+				return interaction.reply({
+					content: `Эту комманду можно применять только в чате <#${command.channelId()}>`,
+					ephemeral: true,
+				});
+			}
 
 			await command.execute(client, interaction);
 		});
@@ -23,7 +30,7 @@ async function executeCommandInteraction(client: Client, interaction: MessageCom
 }
 
 export const interactionCreate: Event = {
-	async execute(client, interaction: MessageComponentInteraction) {
+	async execute(client, interaction: CommandInteraction) {
 		if (interaction.isCommand()) {
 			return executeCommandInteraction(client, interaction);
 		}

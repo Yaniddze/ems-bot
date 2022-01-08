@@ -1,7 +1,8 @@
-import { Client, MessageComponentInteraction } from 'discord.js';
+import { Client, CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
 
 export type Command = {
+	channelId?: () => string;
 	data: Omit<SlashCommandBuilder, 'addSubcommand' | 'addSubcommandGroup'>;
-	execute: (client: Client, interaction: MessageComponentInteraction, ...args: any) => void | Promise<void>;
+	execute: (client: Client, interaction: CommandInteraction, ...args: any) => void | Promise<void>;
 };
