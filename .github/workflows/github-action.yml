@@ -22,5 +22,5 @@ jobs:
             cd ems-bot
             git pull
             npm ci
-            mpm stop
+            npm stop
             npm run start
