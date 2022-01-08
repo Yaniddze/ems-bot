@@ -1,6 +1,8 @@
 import { Client, Intents } from 'discord.js';
 import { config } from 'dotenv';
 
+import { initSettings } from './initSettings';
+
 import * as events from './events';
 
 config();
@@ -32,4 +34,7 @@ Object.keys(events).forEach(key => {
   }
 });
 
-client.login(process.env.BOT_TOKEN);
+(async () => {
+  await initSettings(client);
+  await client.login(process.env.BOT_TOKEN);
+})();
