@@ -5,8 +5,6 @@ import * as events from './events';
 
 config();
 
-process.title = 'emsbot';
-
 const client = new Client({
   intents: [
     Intents.FLAGS.GUILDS,

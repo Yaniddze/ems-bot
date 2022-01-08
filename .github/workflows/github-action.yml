@@ -21,6 +21,6 @@ jobs:
           script: |
             cd ems-bot
             git pull
-            npm ci
-            npm stop
-            npm run start
+            docker-compose build
+            docker-compose down
+            docker-compose up -d
