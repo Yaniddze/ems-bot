@@ -34,6 +34,6 @@ Object.keys(events).forEach(name => {
 });
 
 (async () => {
-  await initSettings(client);
-  await client.login(process.env.BOT_TOKEN);
+	await client.login(process.env.BOT_TOKEN);
+	await initSettings(client);
 })();
