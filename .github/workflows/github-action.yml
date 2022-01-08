@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [16.13.x]
     steps:
       - name: Deploy Node.Js
         uses: appleboy/ssh-action@v0.1.2
@@ -21,7 +21,6 @@ jobs:
           script: |
             cd ems-bot
             git pull
-            nvm use 16.13.0
             npm ci
             npm stop
             npm run start
