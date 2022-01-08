@@ -21,6 +21,7 @@ jobs:
           script: |
             cd ems-bot
             git pull
+            nvm use 16.13.0
             npm ci
             npm stop
             npm run start
