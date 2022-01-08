@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "rimraf ./dist && rimraf ./tsconfig.tsbuildinfo && npx tsc -p ./tsconfig.json",
+    "build": "npx rimraf ./dist && npx rimraf ./tsconfig.tsbuildinfo && npx tsc -p ./tsconfig.json",
     "start": "npm run build && node ./dist/index.js",
     "stop": "pkill --signal SIGINT emsbot"
   },
