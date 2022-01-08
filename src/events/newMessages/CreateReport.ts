@@ -6,7 +6,7 @@ import { removeFromAvailableRoles } from '../../utils';
 import { NewMessageHandler } from './types';
 
 export const CreateReportHandler: NewMessageHandler = {
-	getChannel: () => getSettings().closeReportChatId,
+	getChannel: () => getSettings().createReportChatId,
 	handle: async (client: Client, message: Message) => {
 		const embed = message.embeds.find(x => x.title === 'Поступил новый выговор!');
 
@@ -27,5 +27,11 @@ export const CreateReportHandler: NewMessageHandler = {
 
 		await removeFromAvailableRoles(foundUser);
 		await foundUser.roles.add(roleToSet);
+
+		const thread = await message.startThread({
+			name: 'Почему Вадим плох',
+		});
+
+		await thread.send('Вадим хуй');
 	},
 };
