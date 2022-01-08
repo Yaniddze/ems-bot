@@ -1,0 +1,26 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Rebuild:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - name: Deploy Node.Js
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{secrets.SSH_HOST}}
+          password: ${{secrets.SSH_PASS}}
+          username: ${{secrets.SSH_USER}}
+
+          script: |
+            cd ems-bot
+            git pull
+            npm ci
+            mpm stop
+            npm run start
