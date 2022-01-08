@@ -9,7 +9,7 @@ export const messageCreate: Event = {
 			const currentMessage = messages[localMessage] as NewMessageHandler;
 			if (currentMessage.getChannel() === message.channelId) {
 				try {
-					await currentMessage.handler(client, message);
+					await currentMessage.handle(client, message);
 				} catch (e) {
 					console.log(e);
 				}

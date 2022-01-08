@@ -7,7 +7,7 @@ import { NewMessageHandler } from './types';
 
 export const CreateReportHandler: NewMessageHandler = {
 	getChannel: () => getSettings().closeReportChatId,
-	handler: async (client: Client, message: Message) => {
+	handle: async (client: Client, message: Message) => {
 		const embed = message.embeds.find(x => x.title === 'Поступил новый выговор!');
 
 		if (embed === undefined) return;

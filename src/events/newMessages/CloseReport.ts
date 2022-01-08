@@ -8,7 +8,7 @@ import { NewMessageHandler } from './types';
 
 export const CloseReportHandler: NewMessageHandler = {
 	getChannel: () => getSettings().closeReportChatId,
-	handler: async (client: Client, message: Message) => {
+	handle: async (client: Client, message: Message) => {
 		const users = message.mentions.users.map(x => x);
 		if (users.length === 0) return;
 		const metionedUser = users[0];

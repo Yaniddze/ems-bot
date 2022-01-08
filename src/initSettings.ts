@@ -1,5 +1,6 @@
 import { Client } from 'discord.js';
 import { setSettings } from './store';
+import { normalizeSettings } from './utils';
 
 const availableSettingsChannelNames = ['настройки', 'настройки ems-bot', 'настройки emsbot', 'emsbot settings'];
 
@@ -18,8 +19,8 @@ export const initSettings = async (client: Client) => {
 
 	if (messageWithSettings === undefined) throw Error('There is no message with settings');
 
-	const normalizedSettings = messageWithSettings.content.slice(8, messageWithSettings.content.length - 4);
+	const normalizedSettings = normalizeSettings(messageWithSettings);
 	const settings = JSON.parse(normalizedSettings);
 
-	setSettings(settings);
+	setSettings({ ...settings, settingsChatId: settingsChannel.id });
 };
