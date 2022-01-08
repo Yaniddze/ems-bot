@@ -4,7 +4,9 @@ import { getSettings } from '../../store';
 
 import { removeFromAvailableRoles } from '../../utils';
 
-export const CloseReportHandler = {
+import { NewMessageHandler } from './types';
+
+export const CloseReportHandler: NewMessageHandler = {
 	getChannel: () => getSettings().closeReportChatId,
 	handler: async (client: Client, message: Message) => {
 		const users = message.mentions.users.map(x => x);

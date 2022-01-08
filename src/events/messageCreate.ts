@@ -1,13 +1,15 @@
 import { Client, Message } from 'discord.js';
 import { Event } from './types';
 import * as messages from './newMessages';
+import { NewMessageHandler } from './newMessages/types';
 
 export const messageCreate: Event = {
 	async execute(client: Client, message: Message) {
 		Object.keys(messages).forEach(async localMessage => {
-			if (messages[localMessage].getChannel() === message.channelId) {
+			const currentMessage = messages[localMessage] as NewMessageHandler;
+			if (currentMessage.getChannel() === message.channelId) {
 				try {
-					await messages[localMessage].handler(client, message);
+					await currentMessage.handler(client, message);
 				} catch (e) {
 					console.log(e);
 				}

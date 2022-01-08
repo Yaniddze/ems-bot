@@ -3,7 +3,9 @@ import { Client, Message } from 'discord.js';
 import { getSettings } from '../../store';
 import { removeFromAvailableRoles } from '../../utils';
 
-export const CreateReportHandler = {
+import { NewMessageHandler } from './types';
+
+export const CreateReportHandler: NewMessageHandler = {
 	getChannel: () => getSettings().closeReportChatId,
 	handler: async (client: Client, message: Message) => {
 		const embed = message.embeds.find(x => x.title === 'Поступил новый выговор!');
