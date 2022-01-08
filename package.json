@@ -6,8 +6,9 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "rimraf ./dist && tsc",
-    "start": "npm run build && node ./dist/index.js"
+    "build": "rimraf ./dist && rimraf ./tsconfig.tsbuildinfo && tsc",
+    "start": "npm run build && node ./dist/index.js",
+    "stop": "pkill --signal SIGINT emsbot"
   },
   "dependencies": {
     "discord.js": "^13.5.0",

@@ -4,3 +4,4 @@ public
 tsconfig.build.tsbuildinfo
 database
 .env
+tsconfig.tsbuildinfo
