@@ -1,9 +1,11 @@
 export type Settings = {
-	xyu: number;
+	closeReportChatId: string;
+	createReportChatId: string;
 };
 
 let settings: Settings = {
-	xyu: 1,
+	closeReportChatId: '',
+	createReportChatId: '',
 };
 
 export const getSettings = () => settings;

@@ -1,9 +1,11 @@
 import { Client, Message } from 'discord.js';
 
+import { getSettings } from '../../store';
+
 import { removeFromAvailableRoles } from '../../utils';
 
 export const CloseReportHandler = {
-	channel: '928724129329344552',
+	getChannel: () => getSettings().closeReportChatId,
 	handler: async (client: Client, message: Message) => {
 		const users = message.mentions.users.map(x => x);
 		if (users.length === 0) return;
