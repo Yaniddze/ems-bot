@@ -2,6 +2,7 @@ import 'dotenv/config.js';
 import { Client, Intents } from 'discord.js';
 
 import { initSettings } from './initSettings';
+import { applyMigrations } from './database';
 
 import * as events from './events';
 import { Event } from './events/types';
@@ -34,6 +35,7 @@ Object.keys(events).forEach(name => {
 });
 
 (async () => {
+	await applyMigrations();
 	await client.login(process.env.BOT_TOKEN);
 	await initSettings(client);
 })();
