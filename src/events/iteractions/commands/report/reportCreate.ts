@@ -50,13 +50,14 @@ export const reportCreate: Command = {
 					['Строгий 3/3', 5],
 				]),
 		),
-	async execute(client, interaction) {
+	async execute(interaction) {
+		console.log(interaction);
+
 		const timeAndDateFormatter = new Intl.DateTimeFormat('ru', {
 			hour: 'numeric',
 			minute: 'numeric',
 			month: 'long',
 			day: 'numeric',
-			year: 'numeric',
 		});
 
 		const options = interaction.options;
@@ -79,14 +80,14 @@ export const reportCreate: Command = {
 		reportType = reportType >= availableRoles.length ? availableRoles.length - 1 : reportType;
 
 		await removeFromAvailableRoles(foundUser);
-		await foundUser.roles.add(allRoles.find(x => x.name === availableRoles[reportType]).id);
+		const rightRole = allRoles.find(x => x.name === availableRoles[reportType]);
+		await foundUser.roles.add(rightRole.id);
 
 		const embed = new MessageEmbed()
-			.setColor('#0099ff')
-			.setTitle('Поступил новый выговор!')
+			.setColor(rightRole.hexColor)
 			.addFields({ name: 'Кто выдал выговор', value: `<@${goodGuy.id}>` })
 			.addFields({ name: 'Нарушитель', value: `<@${badGuy.id}>` })
-			.addFields({ name: 'Выданный выговор', value: availableRoles[reportType] })
+			.addFields({ name: 'Выданный выговор', value: `<@&${rightRole.id}>` })
 			.addFields({ name: 'Причина', value: reason })
 			.addFields({ name: 'Доказательства нарушения', value: proofs })
 			.addFields({ name: 'Назначенная отработка', value: workingOut })
@@ -94,9 +95,9 @@ export const reportCreate: Command = {
 			.addFields({ name: 'Срок действия выговора', value: 'NULL' });
 
 		await interaction.reply({
-			embeds: [embed],
 			ephemeral: true,
-			components: [new MessageActionRow().addComponents(createButton('Отправить'))],
+			embeds: [embed],
+			components: [new MessageActionRow().addComponents(createButton('Отправить', 'SUCCESS'))],
 		});
 	},
 };

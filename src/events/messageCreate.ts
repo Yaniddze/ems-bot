@@ -6,12 +6,12 @@ import * as messages from './newMessages';
 import { NewMessageHandler } from './newMessages/types';
 
 export const messageCreate: Event = {
-	async execute(client, message: Message) {
+	async execute(message: Message) {
 		Object.keys(messages).forEach(async localMessage => {
 			const currentMessage = messages[localMessage] as NewMessageHandler;
 			if (currentMessage.getChannel() === message.channelId) {
 				try {
-					await currentMessage.handle(client, message);
+					await currentMessage.handle(message);
 				} catch (e) {
 					console.log(e);
 				}

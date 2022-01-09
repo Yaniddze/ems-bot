@@ -1,4 +1,4 @@
-import { Client, Message } from 'discord.js';
+import { Message } from 'discord.js';
 
 import { getSettings } from '../../store';
 import { removeFromAvailableRoles } from '../../utils';
@@ -7,7 +7,7 @@ import { NewMessageHandler } from './types';
 
 export const CreateReportHandler: NewMessageHandler = {
 	getChannel: () => getSettings().createReportChatId,
-	handle: async (client: Client, message: Message) => {
+	handle: async (message: Message) => {
 		const embed = message.embeds.find(x => x.title === 'Поступил новый выговор!');
 
 		if (embed === undefined) return;

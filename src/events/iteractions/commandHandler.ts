@@ -1,9 +1,9 @@
-import { Client, CommandInteraction } from 'discord.js';
+import { CommandInteraction } from 'discord.js';
 import * as commands from './commands';
 
 import { Command } from './commands/types';
 
-export async function executeCommandInteraction(client: Client, interaction: CommandInteraction) {
+export async function executeCommandInteraction(interaction: CommandInteraction) {
 	try {
 		Object.keys(commands).forEach(async name => {
 			const command = ((commands as unknown) as { [key: string]: Command })[name];
@@ -15,7 +15,7 @@ export async function executeCommandInteraction(client: Client, interaction: Com
 				});
 			}
 
-			await command.execute(client, interaction);
+			await command.execute(interaction);
 		});
 	} catch (err) {
 		console.error(err);
