@@ -9,6 +9,5 @@ export const createClient = async () => {
         port: 5432,
     });
     await client.connect();
-
     return client;
 }
