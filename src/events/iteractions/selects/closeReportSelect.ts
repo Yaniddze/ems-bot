@@ -27,7 +27,7 @@ export const closeReportSelect: SelectHandler = {
 		const oldMessage = await interaction.channel.messages.fetch(oldMessageId);
 
 		const thread = await oldMessage.startThread({
-			name: 'Снятие выговора',
+			name: member.nickname,
 		});
 
 		await thread.send(`<@${interaction.user.id}> снял выговор`);

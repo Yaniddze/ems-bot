@@ -31,8 +31,8 @@ export const approveWorkoutButton: ButtonHandler = {
 		await removeFromAvailableRoles(member);
 
 		if (interaction.channel.isThread()) {
-			interaction.channel.send(`<@${report.goodguy}> приял доказатества и снял выговор`);
-			interaction.channel.setArchived(true);
+			await interaction.channel.send(`<@${report.goodguy}> приял доказатества и снял выговор`);
+			await interaction.channel.setArchived(true);
 		}
 	},
 };

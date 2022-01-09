@@ -43,11 +43,12 @@ export const reportWorkout: Command = {
 		const proofs = interaction.options.get('доказательства').value;
 
 		const message = await interaction.channel.messages.fetch(report.messageid);
+		const user = await interaction.guild.members.fetch(report.badguy);
 
 		const thread = message.hasThread
-			? message.thread
+			? await message.thread.fetch()
 			: await message.startThread({
-					name: 'Отработка выговора',
+					name: user.nickname,
 			  });
 
 		const approveMessage = await thread.send({
