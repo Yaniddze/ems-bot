@@ -2,7 +2,7 @@ import { ButtonInteraction, Client } from 'discord.js';
 import { getSettings } from '../../../store';
 import { removeFromAvailableRoles, addDaysToDate, normalizeRole } from '../../../utils';
 
-import { addReport } from '../../../database';
+import { addReport, getUnresolvedMessage } from '../../../database';
 
 import { ButtonHandler } from './types';
 
@@ -21,6 +21,7 @@ export const createReportButton: ButtonHandler = {
 		const metionedUser = badGuyValue.slice(2, badGuyValue.length - 1);
 
 		const foundUser = await guild.members.fetch(metionedUser);
+		const lastMessage = await getUnresolvedMessage(foundUser.id);
 
 		await removeFromAvailableRoles(foundUser);
 		await foundUser.roles.add(roleId);
@@ -36,5 +37,20 @@ export const createReportButton: ButtonHandler = {
 			goodguy: interaction.user.id,
 			messageid: message.id,
 		});
+
+		if (lastMessage === '') return;
+
+		const foundMessage = await interaction.channel.messages.fetch(lastMessage);
+		const thread = await foundMessage.startThread({
+			name: 'Поступил новый выговор',
+		});
+
+		await thread.send({
+			content: `Был выдан новый выговор https://discord.com/channels/${process.env.GUID_ID}/${
+				getSettings().createReportChatId
+			}/${message.id}`,
+		});
+
+		await thread.setArchived(true);
 	},
 };
