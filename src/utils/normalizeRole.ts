@@ -1,1 +1,1 @@
-export const normalizeRole = (toNormalize: string) => toNormalize.slice(3, toNormalize.length - 3);
+export const normalizeRole = (toNormalize: string) => toNormalize.slice(3, toNormalize.length - 1);
