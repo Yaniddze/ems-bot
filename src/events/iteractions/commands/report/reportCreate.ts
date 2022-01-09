@@ -3,7 +3,7 @@ import { MessageActionRow, MessageEmbed } from 'discord.js';
 
 import { getSettings } from '../../../../store';
 
-import { removeFromAvailableRoles, availableRoles } from '../../../../utils';
+import { availableRoles } from '../../../../utils';
 import { createButton } from '../../../../interactions';
 
 import { Command } from '../types';
@@ -51,8 +51,6 @@ export const reportCreate: Command = {
 				]),
 		),
 	async execute(interaction) {
-		console.log(interaction);
-
 		const timeAndDateFormatter = new Intl.DateTimeFormat('ru', {
 			hour: 'numeric',
 			minute: 'numeric',
@@ -79,9 +77,7 @@ export const reportCreate: Command = {
 
 		reportType = reportType >= availableRoles.length ? availableRoles.length - 1 : reportType;
 
-		await removeFromAvailableRoles(foundUser);
 		const rightRole = allRoles.find(x => x.name === availableRoles[reportType]);
-		await foundUser.roles.add(rightRole.id);
 
 		const embed = new MessageEmbed()
 			.setColor(rightRole.hexColor)
