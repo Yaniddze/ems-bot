@@ -96,7 +96,7 @@ export const reportCreate: Command = {
 		await interaction.reply({
 			embeds: [embed],
 			ephemeral: true,
-			components: [new MessageActionRow().addComponents(createButton('xyu', 'Отправить'))],
+			components: [new MessageActionRow().addComponents(createButton('Отправить'))],
 		});
 	},
 };
