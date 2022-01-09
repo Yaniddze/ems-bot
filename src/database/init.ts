@@ -15,8 +15,9 @@ export const applyMigrations = async () => {
     
     const folderPath = path.join(cwd(), 'migrations');
     const migrations = fs.readdirSync(folderPath);
-
-    migrations.sort().forEach(async migrationToApply => {
+    
+    migrations.sort()
+    migrations.forEach(async migrationToApply => {
         const migrationName = migrationToApply.split('.')[0];
         
         if (!appliedMigrationNames.includes(migrationName)) {
