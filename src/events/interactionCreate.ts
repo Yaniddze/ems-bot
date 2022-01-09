@@ -4,13 +4,13 @@ import { executeCommandInteraction, executeButtonInteraction } from './iteractio
 import { Event } from './types';
 
 export const interactionCreate: Event = {
-	async execute(interaction: Interaction) {
+	async execute(_, interaction: Interaction) {
 		if (interaction.isCommand()) {
-			return executeCommandInteraction(interaction);
+			return await executeCommandInteraction(interaction);
 		}
 
 		if (interaction.isButton()) {
-			return executeButtonInteraction(interaction);
+			return await executeButtonInteraction(interaction);
 		}
 	},
 };
