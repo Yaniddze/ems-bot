@@ -10,7 +10,7 @@ export const getFromWaitingQueue = async (messageId: string): Promise<Query | un
 		`SELECT reports.*, waitforapprove.messageid as waitmessage
 		FROM waitforapprove 
 		JOIN reports ON reports.id = waitforapprove.reportid 
-		WHERE waitforapprove.messageid='${messageId}'`,
+		WHERE waitforapprove.messageid='${messageId}' AND reports.resolved=FALSE`,
 	);
 
 	return data.rows[0];

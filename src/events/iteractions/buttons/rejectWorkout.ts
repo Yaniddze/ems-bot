@@ -1,7 +1,6 @@
-import { ButtonInteraction, MessageActionRow } from 'discord.js';
+import { ButtonInteraction } from 'discord.js';
 
 import { getFromWaitingQueue } from '../../../database';
-import { getSettings } from '../../../store';
 
 import { ButtonHandler } from './types';
 
@@ -18,9 +17,8 @@ export const rejectWorkoutButton: ButtonHandler = {
 		}
 
 		await interaction.reply({
-			content: `Используйте команду /отклонить-отработку в чате <#${
-				getSettings().createReportChatId
-			}> для отклонения отработки`,
+			content: `Используйте команду /отклонить-отработку в треде для отклонения отработки`,
+			ephemeral: true,
 		});
 	},
 };

@@ -8,15 +8,15 @@ export async function executeCommandInteraction(interaction: CommandInteraction)
 		Object.keys(commands).forEach(async name => {
 			const command = ((commands as unknown) as { [key: string]: Command })[name];
 
-			if (command.channelId !== undefined && command.channelId() !== interaction.channelId) {
-				return interaction.reply({
-					content: `Эту комманду можно применять только в чате <#${command.channelId()}>`,
-					ephemeral: true,
-				});
-			}
-
 			if (interaction.commandName === command.name) {
-				await command.execute(interaction);
+				if (command.channelId !== undefined && command.channelId() !== interaction.channelId) {
+					return interaction.reply({
+						content: `Эту комманду можно применять только в чате <#${command.channelId()}>`,
+						ephemeral: true,
+					});
+				} else {
+					await command.execute(interaction);
+				}
 			}
 		});
 	} catch (err) {
