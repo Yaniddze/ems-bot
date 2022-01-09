@@ -1,10 +1,12 @@
+import { Client } from 'discord.js';
+
 import { registeringCommands } from '../utils';
 
 import { Event } from './types';
 
 export const ready: Event = {
 	once: true,
-	execute(client) {
+	execute(client: Client) {
 		const user = client.user;
 
 		user.setUsername('EMS Helper');

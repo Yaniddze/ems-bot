@@ -1,4 +1,4 @@
-import { Client, Message } from 'discord.js';
+import { Message } from 'discord.js';
 
 import { getSettings } from '../../store';
 
@@ -8,7 +8,7 @@ import { NewMessageHandler } from './types';
 
 export const CloseReportHandler: NewMessageHandler = {
 	getChannel: () => getSettings().closeReportChatId,
-	handle: async (client: Client, message: Message) => {
+	handle: async (message: Message) => {
 		const users = message.mentions.users.map(x => x);
 		if (users.length === 0) return;
 		const metionedUser = users[0];

@@ -1,6 +1,6 @@
-import { ButtonInteraction, Client } from 'discord.js';
+import { ButtonInteraction } from 'discord.js';
 
 export type ButtonHandler = {
 	getChannelId: () => string;
-	handle: (client: Client, interaction: ButtonInteraction) => Promise<void>;
+	handle: (interaction: ButtonInteraction) => Promise<void>;
 };
