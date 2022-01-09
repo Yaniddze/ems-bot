@@ -1,5 +1,5 @@
 import { Interaction } from 'discord.js';
-import { executeCommandInteraction, executeButtonInteraction } from './iteractions';
+import { executeCommandInteraction, executeButtonInteraction, executeSelectInteraction } from './iteractions';
 
 import { Event } from './types';
 
@@ -11,6 +11,10 @@ export const interactionCreate: Event = {
 
 		if (interaction.isButton()) {
 			return await executeButtonInteraction(interaction);
+		}
+
+		if (interaction.isSelectMenu()) {
+			return await executeSelectInteraction(interaction);
 		}
 	},
 };

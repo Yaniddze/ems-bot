@@ -15,7 +15,9 @@ export async function executeCommandInteraction(interaction: CommandInteraction)
 				});
 			}
 
-			await command.execute(interaction);
+			if (interaction.commandName === command.name) {
+				await command.execute(interaction);
+			}
 		});
 	} catch (err) {
 		console.error(err);

@@ -8,6 +8,7 @@ import { ButtonHandler } from './types';
 
 export const createReportButton: ButtonHandler = {
 	getChannelId: () => getSettings().createReportChatId,
+	buttonId: 'создать',
 	handle: async (interaction: ButtonInteraction) => {
 		const embed = interaction.message.embeds[0];
 

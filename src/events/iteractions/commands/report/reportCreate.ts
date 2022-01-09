@@ -10,6 +10,7 @@ import { Command } from '../types';
 
 export const reportCreate: Command = {
 	channelId: () => getSettings().createReportChatId,
+	name: 'дать-выговор',
 	data: new SlashCommandBuilder()
 		.setName('дать-выговор')
 		.setDescription('Выдать выговор сотруднику (нарушителю)')
@@ -93,7 +94,7 @@ export const reportCreate: Command = {
 		await interaction.reply({
 			ephemeral: true,
 			embeds: [embed],
-			components: [new MessageActionRow().addComponents(createButton('Отправить', 'SUCCESS'))],
+			components: [new MessageActionRow().addComponents(createButton('Отправить', 'создать'))],
 		});
 	},
 };
