@@ -46,7 +46,7 @@ export const createReportButton: ButtonHandler = {
 		});
 
 		await thread.send({
-			content: `Был выдан новый выговор https://discord.com/channels/${process.env.GUID_ID}/${
+			content: `Был выдан новый выговор https://discord.com/channels/${process.env.GUILD_ID}/${
 				getSettings().createReportChatId
 			}/${message.id}`,
 		});
