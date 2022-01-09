@@ -8,7 +8,10 @@ export async function executeButtonInteraction(interaction: ButtonInteraction) {
 		Object.keys(buttons).map(async innerButton => {
 			const foundButton = (buttons as { [key: string]: ButtonHandler })[innerButton];
 
-			if (foundButton.getChannelId() === interaction.channelId && interaction.customId === foundButton.buttonId) {
+			if (
+				(foundButton.getChannelId === undefined || foundButton.getChannelId() === interaction.channelId) &&
+				interaction.customId === foundButton.buttonId
+			) {
 				await foundButton.handle(interaction);
 			}
 		});
