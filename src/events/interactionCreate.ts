@@ -1,38 +1,15 @@
-import { Client, CommandInteraction } from 'discord.js';
-
-import * as commands from '../commands';
-import { Command } from '../commands/types';
+import { Interaction } from 'discord.js';
+import { executeCommandInteraction, executeButtonInteraction } from './iteractions';
 
 import { Event } from './types';
 
-async function executeCommandInteraction(client: Client, interaction: CommandInteraction) {
-	try {
-		Object.keys(commands).forEach(async name => {
-			const command = ((commands as unknown) as { [key: string]: Command })[name];
-
-			if (command.channelId !== undefined && command.channelId() !== interaction.channelId) {
-				return interaction.reply({
-					content: `Эту комманду можно применять только в чате <#${command.channelId()}>`,
-					ephemeral: true,
-				});
-			}
-
-			await command.execute(client, interaction);
-		});
-	} catch (err) {
-		console.error(err);
-
-		return interaction.reply({
-			content: 'При выполнении произошла ошибка',
-			ephemeral: true,
-		});
-	}
-}
-
 export const interactionCreate: Event = {
-	async execute(client, interaction: CommandInteraction) {
+	async execute(client, interaction: Interaction) {
 		if (interaction.isCommand()) {
 			return executeCommandInteraction(client, interaction);
+		}
+		if (interaction.isButton()) {
+			return executeButtonInteraction(client, interaction);
 		}
 	},
 };

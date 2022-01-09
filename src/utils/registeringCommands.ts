@@ -1,7 +1,7 @@
 import { ApplicationCommandDataResolvable, Client } from 'discord.js';
 
-import * as commands from '../commands';
-import { Command } from '../commands/types';
+import * as commands from '../events/iteractions/commands';
+import { Command } from '../events/iteractions/commands/types';
 
 export const registeringCommands = (client: Client) => {
 	const guildId = process.env.GUILD_ID;

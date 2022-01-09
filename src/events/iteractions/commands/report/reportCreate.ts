@@ -1,9 +1,10 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed } from 'discord.js';
+import { MessageActionRow, MessageEmbed } from 'discord.js';
 
-import { getSettings } from '../../store';
+import { getSettings } from '../../../../store';
 
-import { availableRoles, removeFromAvailableRoles } from '../../utils';
+import { removeFromAvailableRoles, availableRoles } from '../../../../utils';
+import { createButton } from '../../../../interactions';
 
 import { Command } from '../types';
 
@@ -95,6 +96,7 @@ export const reportCreate: Command = {
 		await interaction.reply({
 			embeds: [embed],
 			ephemeral: true,
+			components: [new MessageActionRow().addComponents(createButton('xyu', 'Отправить'))],
 		});
 	},
 };
