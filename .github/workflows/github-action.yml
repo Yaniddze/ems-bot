@@ -1,26 +1,27 @@
 name: Deploy
 on:
-  push:
-    branches:
-      - master
+    push:
+        branches:
+            - master
 
 jobs:
-  Rebuild:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.13.x]
-    steps:
-      - name: Deploy Node.Js
-        uses: appleboy/ssh-action@v0.1.2
-        with:
-          host: ${{secrets.SSH_HOST}}
-          password: ${{secrets.SSH_PASS}}
-          username: ${{secrets.SSH_USER}}
+    Rebuild:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [16.13.x]
+        steps:
+            - name: Deploy Node.Js
+              uses: appleboy/ssh-action@v0.1.2
+              with:
+                  host: ${{secrets.SSH_HOST}}
+                  password: ${{secrets.SSH_PASS}}
+                  username: ${{secrets.SSH_USER}}
 
-          script: |
-            cd ems-bot
-            git pull
-            docker-compose build
-            docker-compose down
-            docker-compose up -d
+                  script: |
+                      cd ems-bot
+                      git pull
+                      docker-compose build
+                      docker-compose down
+                      docker-compose up -d
+                      docker image prune --filter="dangling=true"
