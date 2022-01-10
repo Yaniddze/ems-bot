@@ -3,7 +3,7 @@ import { MessageActionRow, MessageEmbed } from 'discord.js';
 
 import { getSettings } from '../../../../store';
 
-import { availableRoles } from '../../../../utils';
+import { addDaysToDate, availableRoles, formatDate } from '../../../../utils';
 import { createButton } from '../../../../interactions';
 
 import { Command } from '../types';
@@ -52,13 +52,6 @@ export const reportCreate: Command = {
 				]),
 		),
 	async execute(interaction) {
-		const timeAndDateFormatter = new Intl.DateTimeFormat('ru', {
-			hour: 'numeric',
-			minute: 'numeric',
-			month: 'long',
-			day: 'numeric',
-		});
-
 		const options = interaction.options;
 
 		const goodGuy = interaction.user;
@@ -88,8 +81,11 @@ export const reportCreate: Command = {
 			.addFields({ name: 'Причина', value: reason })
 			.addFields({ name: 'Доказательства нарушения', value: proofs })
 			.addFields({ name: 'Назначенная отработка', value: workingOut })
-			.addFields({ name: 'Дата и время выдачи', value: timeAndDateFormatter.format(Date.now()) })
-			.addFields({ name: 'Срок действия выговора', value: 'NULL' });
+			.addFields({ name: 'Дата и время выдачи', value: formatDate(new Date()) })
+			.addFields({
+				name: 'Срок действия выговора',
+				value: formatDate(addDaysToDate(new Date(), 3)),
+			});
 
 		await interaction.reply({
 			ephemeral: true,

@@ -1,19 +1,20 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 
 import { getReportByMessage, deleteFromWaitingQueue } from '../../../../database';
+import { removeFromAvailableRoles } from '../../../../utils';
 
 import { Command } from '../types';
 
-export const rejectWorkout: Command = {
-	name: 'отклонить-отработку',
+export const approveWorkout: Command = {
+	name: 'принять-отработку',
 	data: new SlashCommandBuilder()
-		.setName('отклонить-отработку')
-		.setDescription('Отклонить отработку')
+		.setName('принять-отработку')
+		.setDescription('Принять отработку')
 		.addStringOption(option =>
 			option
-				.setName('причина')
-				.setDescription('Причина отклонения доказательств отработки')
-				.setRequired(true),
+				.setName('комментарий')
+				.setDescription('Комментарий')
+				.setRequired(false),
 		),
 	async execute(interaction) {
 		if (!interaction.channel.isThread()) {
@@ -44,10 +45,17 @@ export const rejectWorkout: Command = {
 			return;
 		}
 
-		const reason = interaction.options.get('причина').value;
+		const comment = interaction.options.get('комментарий').value;
+
+		const member = await interaction.guild.members.fetch(report.badguy);
 
 		await deleteFromWaitingQueue(report.waitmessage);
+		await removeFromAvailableRoles(member);
 
-		await interaction.channel.send(`<@${report.badguy}>\n<@${report.goodguy}> отклонил вашу отработку:\n${reason}`);
+		await interaction.channel.send(
+			`<@${report.badguy}>\n<@${report.goodguy}> принял вашу отработку:\n${comment || ''}`,
+		);
+
+		await interaction.channel.setArchived(true);
 	},
 };

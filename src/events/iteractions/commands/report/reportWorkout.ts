@@ -4,8 +4,6 @@ import { getSettings } from '../../../../store';
 import { getReportByBadGuy, addInWaitingQueue, checkAnyWaiting } from '../../../../database';
 
 import { Command } from '../types';
-import { MessageActionRow } from 'discord.js';
-import { createButton } from '../../../../interactions';
 
 export const reportWorkout: Command = {
 	channelId: () => getSettings().createReportChatId,
@@ -48,17 +46,11 @@ export const reportWorkout: Command = {
 		const thread = message.hasThread
 			? await message.thread.fetch()
 			: await message.startThread({
-					name: user.nickname,
+					name: user.nickname || user.user.username,
 			  });
 
 		const approveMessage = await thread.send({
 			content: `<@${report.goodguy}>\n<@${report.badguy}> предоставил доказательства отработки:\n${proofs}`,
-			components: [
-				new MessageActionRow().addComponents(
-					createButton('Принять', 'принять выговор'),
-					createButton('Отклонить', 'отклонить выговор'),
-				),
-			],
 		});
 
 		await addInWaitingQueue(approveMessage.id, report.id);

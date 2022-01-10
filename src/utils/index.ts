@@ -4,3 +4,4 @@ export * from './removeFromAvailableRoles';
 export * from './normalizeSettings';
 export * from './addDaysToDate';
 export * from './normalizeRole';
+export * from './formatDate';
